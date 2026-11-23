@@ -1,8 +1,8 @@
 # nginx-frontend.yaml
 
-# 1. Deployment
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: nginx-ingress-deployment
   namespace: frontend
@@ -22,13 +22,11 @@ spec:
         app: app-1
         environment: dev
 
-
-      # Container specification
+    spec:
       containers:
         - name: nginx
-          image: nginx
+          image: nginx:1.28
           imagePullPolicy: IfNotPresent
-  
 ---
 apiVersion: v1
 kind: Service
