@@ -1,0 +1,47 @@
+# nginx-frontend.yaml
+
+# 1. Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-frontend
+  namespace: frontend
+  labels:
+    app: app-1
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: app-1
+
+  template:
+    metadata:
+      labels:
+        app: app-1
+        environment: dev
+
+
+      # Container specification
+      containers:
+        - name: nginx
+          image: nginx
+          imagePullPolicy: IfNotPresent
+  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-1
+  namespace: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: app-1
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+
