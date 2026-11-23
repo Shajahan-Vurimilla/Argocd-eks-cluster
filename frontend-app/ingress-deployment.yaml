@@ -4,7 +4,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-frontend
+  name: nginx-ingress-deployment
   namespace: frontend
   labels:
     app: app-1
