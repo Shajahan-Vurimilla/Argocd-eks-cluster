@@ -17,7 +17,7 @@ spec:
   source:
     repoURL: https://github.com/shajahan-devops1/Argocd-eks-cluster.git
     targetRevision: main
-    path: bootstrap
+    path: frontend-app
 
   # Destination configuration pointing to the target cluster and namespace
   destination:
