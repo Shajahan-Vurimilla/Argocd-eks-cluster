@@ -1,76 +1,76 @@
-# nginx-frontend.yaml
+# # nginx-frontend.yaml
 
 
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-ingress-deployment
-  labels:
-    app: app-1
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: nginx-ingress-deployment
+#   labels:
+#     app: app-1
 
-spec:
-  replicas: 3
+# spec:
+#   replicas: 3
 
-  selector:
-    matchLabels:
-      app: app-1
+#   selector:
+#     matchLabels:
+#       app: app-1
 
-  template:
-    metadata:
-      labels:
-        app: app-1
-        environment: dev
+#   template:
+#     metadata:
+#       labels:
+#         app: app-1
+#         environment: dev
 
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:1.28
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+#     spec:
+#       containers:
+#         - name: nginx
+#           image: nginx:1.28
+#           imagePullPolicy: IfNotPresent
+#           ports:
+#             - name: http
+#               containerPort: 80
+#               protocol: TCP
 
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app-1
-spec:
-  type: ClusterIP
-  selector:
-    app: app-1
-  ports:
-    - name: http
-      port: 80
-      targetPort: 80
-      protocol: TCP
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: app-1
+# spec:
+#   type: ClusterIP
+#   selector:
+#     app: app-1
+#   ports:
+#     - name: http
+#       port: 80
+#       targetPort: 80
+#       protocol: TCP
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: app-1-ingress
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: app-1-ingress
 
-  annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
-    alb.ingress.kubernetes.io/healthcheck-path: /
-    alb.ingress.kubernetes.io/success-codes: "200-399"
+#   annotations:
+#     alb.ingress.kubernetes.io/scheme: internet-facing
+#     alb.ingress.kubernetes.io/target-type: ip
+#     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+#     alb.ingress.kubernetes.io/healthcheck-path: /
+#     alb.ingress.kubernetes.io/success-codes: "200-399"
 
-spec:
-  ingressClassName: alb
+# spec:
+#   ingressClassName: alb
 
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app-1
-                port:
-                  number: 80
+#   rules:
+#     - http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: app-1
+#                 port:
+#                   number: 80
